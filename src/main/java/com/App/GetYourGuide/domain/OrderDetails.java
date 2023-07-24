@@ -16,8 +16,6 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
     @OneToOne
-    private Order order;
-    @OneToOne
     private Guide guide;
     private boolean isPaid;
     private boolean isVerified;
