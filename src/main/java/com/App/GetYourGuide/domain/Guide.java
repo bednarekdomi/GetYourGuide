@@ -1,12 +1,11 @@
 package com.App.GetYourGuide.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -19,5 +18,7 @@ public class Guide {
     private long id;
     private String name;
     private boolean isAvailable;
+    @OneToMany
+    private List<OrderDetails> tours;
 
 }

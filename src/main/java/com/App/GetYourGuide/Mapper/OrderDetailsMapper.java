@@ -8,7 +8,7 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = {GuideMapper.class}, componentModel = "spring")
 public interface OrderDetailsMapper {
 
     @Mapping(source = "orderId", target = "orderId")

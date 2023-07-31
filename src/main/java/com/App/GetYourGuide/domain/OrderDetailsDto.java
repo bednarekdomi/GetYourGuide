@@ -12,13 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class OrderDetailsDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
-    @OneToOne
     private GuideDto guideDto;
     private boolean isPaid;
     private boolean isVerified;
