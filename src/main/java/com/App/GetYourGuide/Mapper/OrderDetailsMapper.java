@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 public interface OrderDetailsMapper {
 
     @Mapping(source = "orderId", target = "orderId")
-    @Mapping(source = "guide", target = "guide")
+    @Mapping(source = "guideDto", target = "guide")
     @Mapping(source = "isPaid", target = "isPaid")
     @Mapping(source = "isVerified", target = "isVerified")
     @Mapping(source = "isSubmitted", target = "isSubmitted")
