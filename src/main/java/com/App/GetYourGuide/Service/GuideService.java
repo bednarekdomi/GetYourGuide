@@ -15,6 +15,8 @@ public class GuideService {
     private final GuideRepository guideRepository;
     private final GuideMapper guideMapper;
 
-
+    public List<GuideDto> getAllGuides() {
+        return guideMapper.mapToGuideDtoList(guideRepository.findAll());
+    }
 
 }
