@@ -1,11 +1,12 @@
 package com.App.GetYourGuide.domain;
 
 import jakarta.persistence.*;
-import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,23 @@ public class Guide {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<OrderDetails> tours;
-    private int daysOffSinceLastTrip;
+    private long daysOffSinceLastTrip;
+
+    public void setDaysOffSinceLastTrip(List<OrderDetails> tours) {
+        if (tours == null || tours.isEmpty()) {
+            daysOffSinceLastTrip = 0;
+        } else {
+
+            LocalDate lastTripDate = tours.get(0).getTourDate();
+            for (OrderDetails orderDetails : tours) {
+                LocalDate tourDate = orderDetails.getTourDate();
+                if (tourDate != null && tourDate.isAfter(lastTripDate)) {
+                    lastTripDate = tourDate;
+                }
+            }
+
+            daysOffSinceLastTrip = ChronoUnit.DAYS.between(lastTripDate, LocalDate.now());
+        }
+    }
 
 }
