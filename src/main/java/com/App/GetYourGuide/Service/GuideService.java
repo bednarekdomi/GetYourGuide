@@ -2,6 +2,7 @@ package com.App.GetYourGuide.Service;
 
 import com.App.GetYourGuide.Mapper.GuideMapper;
 import com.App.GetYourGuide.Repository.GuideRepository;
+import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.GuideDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,6 @@ public class GuideService {
     public List<GuideDto> getAllGuides() {
         return guideMapper.mapToGuideDtoList(guideRepository.findAll());
     }
+
 
 }
