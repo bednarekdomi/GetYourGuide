@@ -1,5 +1,6 @@
 package com.App.GetYourGuide.Service;
 
+import com.App.GetYourGuide.Exception.GuideNotFoundException;
 import com.App.GetYourGuide.Mapper.GuideMapper;
 import com.App.GetYourGuide.Repository.GuideRepository;
 import com.App.GetYourGuide.domain.Guide;
@@ -7,6 +8,8 @@ import com.App.GetYourGuide.domain.GuideDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service

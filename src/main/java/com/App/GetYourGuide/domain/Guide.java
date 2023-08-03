@@ -25,5 +25,6 @@ public class Guide {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<OrderDetails> tours;
+    private int daysOffSinceLastTrip;
 
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,7 @@ public class OrderDetails {
     @ManyToOne
     @JoinColumn(name = "guide_id")
     private Guide guide;
+    private LocalDate tourDate;
     private boolean isPaid;
     private boolean isVerified;
     private boolean isSubmitted;
