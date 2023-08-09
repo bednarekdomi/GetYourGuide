@@ -21,8 +21,8 @@ public class OrderDetailsService {
     private final OrderDetailsRepository orderDetailsRepository;
     private final OrderDetailsMapper orderDetailsMapper;
 
-    public OrderDetailsDto getOrder(Long orderId){
-        return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.getReferenceById(orderId));
+    public Optional<OrderDetailsDto> getOrder(Long orderId){
+        return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.findById(orderId));
     }
     public void deleteOrder(Long orderId){
         orderDetailsRepository.deleteById(orderId);
