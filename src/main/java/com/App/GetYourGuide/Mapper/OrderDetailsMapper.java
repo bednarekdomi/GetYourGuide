@@ -8,6 +8,8 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Optional;
+
 @Mapper(uses = {GuideMapper.class}, componentModel = "spring")
 public interface OrderDetailsMapper {
 
@@ -20,4 +22,8 @@ public interface OrderDetailsMapper {
 
     @InheritInverseConfiguration
     OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails);
+
+    default Optional<OrderDetailsDto> mapToOrderDetailsDto(Optional<OrderDetails> orderDetails){
+        return orderDetails.map(this::mapToOrderDetailsDto);
+    }
 }
