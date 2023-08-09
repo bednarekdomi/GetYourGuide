@@ -4,6 +4,7 @@ import com.App.GetYourGuide.Mapper.OrderDetailsMapper;
 import com.App.GetYourGuide.Repository.OrderDetailsRepository;
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.OrderDetails;
+import com.App.GetYourGuide.domain.OrderDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +21,12 @@ public class OrderDetailsService {
     private final OrderDetailsRepository orderDetailsRepository;
     private final OrderDetailsMapper orderDetailsMapper;
 
+    public OrderDetailsDto getOrder(Long orderId){
+        return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.getReferenceById(orderId));
+    }
+    public void deleteOrder(Long orderId){
+        orderDetailsRepository.deleteById(orderId);
+    }
         public void createOrder(LocalDate date) {
             List<Guide> availableGuide = new ArrayList<>();
             OrderDetails orderToCreate = new OrderDetails();
