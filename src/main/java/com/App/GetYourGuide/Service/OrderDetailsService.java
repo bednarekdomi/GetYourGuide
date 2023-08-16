@@ -25,6 +25,10 @@ public class OrderDetailsService {
         return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.findById(orderId));
     }
 
+    public List<OrderDetailsDto> getAllOrders(){
+        return orderDetailsMapper.mapToOrderDetailsDtoList(orderDetailsRepository.findAll());
+    }
+
     public void deleteOrder(Long orderId) {
         orderDetailsRepository.deleteById(orderId);
     }
