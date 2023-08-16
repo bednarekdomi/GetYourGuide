@@ -21,29 +21,31 @@ public class OrderDetailsService {
     private final OrderDetailsRepository orderDetailsRepository;
     private final OrderDetailsMapper orderDetailsMapper;
 
-    public Optional<OrderDetailsDto> getOrder(Long orderId){
+    public Optional<OrderDetailsDto> getOrder(Long orderId) {
         return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.findById(orderId));
     }
-    public void deleteOrder(Long orderId){
+
+    public void deleteOrder(Long orderId) {
         orderDetailsRepository.deleteById(orderId);
     }
-        public void createOrder(LocalDate date) {
-            List<Guide> availableGuide = new ArrayList<>();
-            OrderDetails orderToCreate = new OrderDetails();
-            List<OrderDetails> allOrders = orderDetailsRepository.findAll();
-            for (OrderDetails order : allOrders) {
-                if (order.getTourDate() != date) {
-                    availableGuide.add(order.getGuide());
-                }
-            }
 
-            if (availableGuide.isEmpty()) {
-                System.out.println("No guides available for this day");
-            } else {
-                availableGuide.sort(Comparator.comparingLong(Guide::getDaysOffSinceLastTrip).reversed());
-                orderToCreate.setGuide(availableGuide.get(0));
-                orderToCreate.setTourDate(date);
-                orderDetailsRepository.save(orderToCreate);
+    public void createOrder(LocalDate date) {
+        List<Guide> availableGuide = new ArrayList<>();
+        OrderDetails orderToCreate = new OrderDetails();
+        List<OrderDetails> allOrders = orderDetailsRepository.findAll();
+        for (OrderDetails order : allOrders) {
+            if (order.getTourDate() != date) {
+                availableGuide.add(order.getGuide());
             }
         }
+
+        if (availableGuide.isEmpty()) {
+            System.out.println("No guides available for this day");
+        } else {
+            availableGuide.sort(Comparator.comparingLong(Guide::getDaysOffSinceLastTrip).reversed());
+            orderToCreate.setGuide(availableGuide.get(0));
+            orderToCreate.setTourDate(date);
+            orderDetailsRepository.save(orderToCreate);
+        }
+    }
 }
