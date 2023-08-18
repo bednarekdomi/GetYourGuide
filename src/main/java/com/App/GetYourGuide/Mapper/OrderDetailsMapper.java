@@ -1,7 +1,5 @@
 package com.App.GetYourGuide.Mapper;
 
-import com.App.GetYourGuide.domain.Guide;
-import com.App.GetYourGuide.domain.GuideDto;
 import com.App.GetYourGuide.domain.OrderDetails;
 import com.App.GetYourGuide.domain.OrderDetailsDto;
 import org.mapstruct.InheritInverseConfiguration;

@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface GuideMapper {
@@ -22,4 +23,8 @@ public interface GuideMapper {
 
     @IterableMapping(elementTargetType = GuideDto.class)
     List<GuideDto> mapToGuideDtoList(List<Guide> guidesList);
+
+    default Optional<GuideDto> mapToGuideDto(Optional<Guide> guide){
+        return guide.map(this::mapToGuideDto);
+    }
 }
