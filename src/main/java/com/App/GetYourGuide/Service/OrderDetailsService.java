@@ -5,7 +5,9 @@ import com.App.GetYourGuide.Repository.OrderDetailsRepository;
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.OrderDetails;
 import com.App.GetYourGuide.domain.OrderDetailsDto;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,8 +16,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 @Service
+@Data
+@RequiredArgsConstructor
 public class OrderDetailsService {
 
     private final OrderDetailsRepository orderDetailsRepository;

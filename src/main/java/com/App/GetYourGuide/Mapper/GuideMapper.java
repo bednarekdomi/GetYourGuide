@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 import java.util.Optional;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface GuideMapper {
 
     @Mapping(source = "id", target = "id")
