@@ -20,7 +20,6 @@ public class Guide {
     @Column(name = "guide_id")
     private long id;
     private String name;
-    private boolean isAvailable;
     @OneToMany(
             mappedBy = "guide",
             cascade = CascadeType.ALL,

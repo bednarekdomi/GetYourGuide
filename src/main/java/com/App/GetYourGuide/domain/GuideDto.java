@@ -11,5 +11,4 @@ public class GuideDto {
 
     private long id;
     private String name;
-    private boolean isAvailable;
 }

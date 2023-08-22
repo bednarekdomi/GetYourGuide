@@ -2,6 +2,7 @@ package com.App.GetYourGuide.Service;
 
 import com.App.GetYourGuide.Mapper.GuideMapper;
 import com.App.GetYourGuide.Repository.GuideRepository;
+import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.GuideDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class GuideService {
     }
 
     public List<GuideDto> getAvailableGuides(LocalDate date){
-        return guideMapper.mapToGuideDtoList(guideRepository.findAll().stream().filter(g -> g.isAvailable())
+        return guideMapper.mapToGuideDtoList(guideRepository.findAll().stream().filter(Guide::isAvailable)
                 .collect(Collectors.toList()));
     }
 
