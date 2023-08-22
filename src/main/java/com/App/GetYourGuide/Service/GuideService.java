@@ -25,8 +25,8 @@ public class GuideService {
         return guideMapper.mapToGuideDtoList(guideRepository.findAll());
     }
 
-    public List<GuideDto> getAvailableGuides(LocalDate date){
-        return guideMapper.mapToGuideDtoList(guideRepository.findAll().stream().filter(Guide::isAvailable)
+    public List<GuideDto> getAvailableGuides(LocalDate date) {
+        return guideMapper.mapToGuideDtoList(guideRepository.findAll().stream().filter(g -> g.getDaysOffSinceLastTrip() > 2)
                 .collect(Collectors.toList()));
     }
 
