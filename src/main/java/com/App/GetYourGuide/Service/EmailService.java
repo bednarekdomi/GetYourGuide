@@ -21,10 +21,7 @@ public class EmailService {
         LOGGER.info("Starting email creation...");
 
         try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(receiverEmail);
-            mailMessage.setSubject(subject);
-            mailMessage.setTo(message);
+            SimpleMailMessage mailMessage = createMail(receiverEmail, subject, message);
 
             javaMailSender.send(mailMessage);
 
@@ -33,5 +30,13 @@ public class EmailService {
         } catch (MailException e) {
             LOGGER.info("Failed to process email sending: " + e.getMessage(), e);
         }
+    }
+
+    private SimpleMailMessage createMail(String receiverEmail, String subject, String message){
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(receiverEmail);
+        mailMessage.setSubject(receiverEmail);
+        mailMessage.setText(message);
+        return mailMessage;
     }
 }
