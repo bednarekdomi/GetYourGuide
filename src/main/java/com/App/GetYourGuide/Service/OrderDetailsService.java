@@ -3,6 +3,7 @@ package com.App.GetYourGuide.Service;
 import com.App.GetYourGuide.Mapper.OrderDetailsMapper;
 import com.App.GetYourGuide.Repository.OrderDetailsRepository;
 import com.App.GetYourGuide.domain.Guide;
+import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.OrderDetails;
 import com.App.GetYourGuide.domain.OrderDetailsDto;
 import lombok.Data;
