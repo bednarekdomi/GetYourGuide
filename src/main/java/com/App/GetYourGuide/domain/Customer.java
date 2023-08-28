@@ -13,7 +13,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long customerId;
-
+    private String name;
     private String email;
 
 }

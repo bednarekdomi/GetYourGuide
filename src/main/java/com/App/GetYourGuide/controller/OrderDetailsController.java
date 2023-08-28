@@ -1,6 +1,7 @@
 package com.App.GetYourGuide.controller;
 
 import com.App.GetYourGuide.Service.OrderDetailsService;
+import com.App.GetYourGuide.domain.Customer;
 import com.App.GetYourGuide.domain.OrderDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class OrderDetailsController {
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<String> createOrderForTheDate(@RequestParam LocalDate date) {
-        orderDetailsService.createOrder(date);
+    public ResponseEntity<String> createOrderForTheDate(@RequestParam Customer customer, LocalDate date) {
+        orderDetailsService.createOrder(customer, date);
         return ResponseEntity.ok("Order placed successfully");
     }
 
