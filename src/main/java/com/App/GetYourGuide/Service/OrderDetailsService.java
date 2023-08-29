@@ -1,6 +1,7 @@
 package com.App.GetYourGuide.Service;
 
 import com.App.GetYourGuide.Mapper.OrderDetailsMapper;
+import com.App.GetYourGuide.Repository.GuideRepository;
 import com.App.GetYourGuide.Repository.OrderDetailsRepository;
 import com.App.GetYourGuide.domain.*;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class OrderDetailsService {
     private final OrderDetailsRepository orderDetailsRepository;
     private final OrderDetailsMapper orderDetailsMapper;
     private final EmailService emailService;
+    private final GuideService guideService;
 
     public Optional<OrderDetailsDto> getOrder(long orderId) {
         return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.findById(orderId));
@@ -36,14 +38,8 @@ public class OrderDetailsService {
     }
 
     public void createOrder(Customer customer, LocalDate date) {
-        List<Guide> availableGuide = new ArrayList<>();
+        List<Guide> availableGuide = guideService.getAvailableGuides(date);
         OrderDetails orderToCreate = new OrderDetails();
-        List<OrderDetails> allOrders = orderDetailsRepository.findAll();
-        for (OrderDetails order : allOrders) {
-            if (order.getTourDate() != date) {
-                availableGuide.add(order.getGuide());
-            }
-        }
 
         if (availableGuide.isEmpty()) {
             System.out.println("No guides available for this day");
@@ -60,16 +56,5 @@ public class OrderDetailsService {
             ));
         }
     }
-
-    public List<GuideDto>availableGuides(LocalDate date){
-        List<GuideDto> availableGuide = new ArrayList<>();
-        List<OrderDetails> allOrders = orderDetailsRepository.findAll();
-        for (OrderDetails order : allOrders) {
-            if (order.getTourDate() != date) {
-                availableGuide.add(order.getGuide());
-            }
-        }
-            return availableGuide;
-        }
 
 }
