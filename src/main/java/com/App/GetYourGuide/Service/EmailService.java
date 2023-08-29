@@ -1,6 +1,7 @@
 package com.App.GetYourGuide.Service;
 
 
+import com.App.GetYourGuide.domain.Customer;
 import com.App.GetYourGuide.domain.MailDetails;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -37,4 +38,5 @@ public class EmailService {
         mailMessage.setText(mailDetails.getMessage());
         return mailMessage;
     }
+
 }

@@ -60,4 +60,16 @@ public class OrderDetailsService {
             ));
         }
     }
+
+    public List<GuideDto>availableGuides(LocalDate date){
+        List<GuideDto> availableGuide = new ArrayList<>();
+        List<OrderDetails> allOrders = orderDetailsRepository.findAll();
+        for (OrderDetails order : allOrders) {
+            if (order.getTourDate() != date) {
+                availableGuide.add(order.getGuide());
+            }
+        }
+            return availableGuide;
+        }
+
 }
