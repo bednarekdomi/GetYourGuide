@@ -17,8 +17,7 @@ public class Customer {
     private Long customerId;
     private String name;
     private String email;
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @OneToMany
     private List<OrderDetails> orderedTours;
 
 }

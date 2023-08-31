@@ -40,6 +40,13 @@ public class EmailService {
         return mailMessage;
     }
 
-
+    public void sendMailAfterCreatingOrder(MailDetails mailDetails, OrderDetails newOrder){
+        sendEmail(new MailDetails(
+                newOrder.getCustomer().getEmail(),
+                "A new order has been created",
+                "Hello " + newOrder.getCustomer().getName() + "!" + "/n" + "A new order number " + newOrder.getOrderId()
+                        + "has been created. You can pay for your order within two days otherwise it will be cancelled"
+        ));
+    }
 
 }

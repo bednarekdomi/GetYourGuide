@@ -24,7 +24,8 @@ public class OrderDetails {
     private boolean isPaid;
     private boolean isVerified;
     private boolean isSubmitted;
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
 
