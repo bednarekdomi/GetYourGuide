@@ -3,6 +3,7 @@ package com.App.GetYourGuide.Service;
 
 import com.App.GetYourGuide.domain.Customer;
 import com.App.GetYourGuide.domain.MailDetails;
+import com.App.GetYourGuide.domain.OrderDetails;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,5 +39,7 @@ public class EmailService {
         mailMessage.setText(mailDetails.getMessage());
         return mailMessage;
     }
+
+
 
 }

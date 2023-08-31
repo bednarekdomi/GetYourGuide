@@ -19,4 +19,5 @@ public class OrderDetailsDto {
     private boolean isPaid;
     private boolean isVerified;
     private boolean isSubmitted;
+    private CustomerDto customerDto;
 }

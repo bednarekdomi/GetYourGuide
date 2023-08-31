@@ -24,6 +24,8 @@ public class OrderDetails {
     private boolean isPaid;
     private boolean isVerified;
     private boolean isSubmitted;
+    @OneToMany
+    private Customer customer;
 
 
 }

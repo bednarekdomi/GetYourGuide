@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Data
@@ -15,5 +17,8 @@ public class Customer {
     private Long customerId;
     private String name;
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private List<OrderDetails> orderedTours;
 
 }
