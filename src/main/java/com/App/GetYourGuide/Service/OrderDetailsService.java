@@ -39,7 +39,7 @@ public class OrderDetailsService {
         if (availableGuide.isEmpty()) {
             System.out.println("No guides available for this day");
         } else {
-           setGuideToOrder(date, availableGuide);
+           orderDetailsRepository.setGuideToOrder(date, availableGuide);
             emailService.sendEmail(new MailDetails(
               customer.getEmail(),
                     "A new order has been created",
@@ -49,11 +49,6 @@ public class OrderDetailsService {
         }
     }
 
-    public void setGuideToOrder(LocalDate date, List<Guide>availableGuides){
-        OrderDetails orderToCreate = new OrderDetails();
-        orderToCreate.setGuide(availableGuides.get(0));
-        orderToCreate.setTourDate(date);
-        orderDetailsRepository.save(orderToCreate);
-    }
+
 
 }
