@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long> {
 
-    default void setGuideToOrder(LocalDate date, List<Guide> availableGuides){
+    default OrderDetails setGuideToOrder(LocalDate date, List<Guide> availableGuides){
         OrderDetails orderToCreate = new OrderDetails();
         orderToCreate.setGuide(availableGuides.get(0));
         orderToCreate.setTourDate(date);

@@ -39,16 +39,9 @@ public class OrderDetailsService {
         if (availableGuide.isEmpty()) {
             System.out.println("No guides available for this day");
         } else {
-           orderDetailsRepository.setGuideToOrder(date, availableGuide);
-            emailService.sendEmail(new MailDetails(
-              customer.getEmail(),
-                    "A new order has been created",
-                    "Hello " + customer.getName() + "!" + "/n" + "A new order number " + orderToCreate.getOrderId()
-                            + "has been created. You can pay for your order within two days otherwise it will be cancelled"
-            ));
+           OrderDetails newOrder = orderDetailsRepository.setGuideToOrder(date, availableGuide);
+            emailService.sendMailAfterCreatingOrder(newOrder);
         }
     }
-
-
 
 }

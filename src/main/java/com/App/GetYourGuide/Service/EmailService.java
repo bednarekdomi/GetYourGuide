@@ -40,7 +40,7 @@ public class EmailService {
         return mailMessage;
     }
 
-    public void sendMailAfterCreatingOrder(MailDetails mailDetails, OrderDetails newOrder){
+    public void sendMailAfterCreatingOrder(OrderDetails newOrder){
         sendEmail(new MailDetails(
                 newOrder.getCustomer().getEmail(),
                 "A new order has been created",
