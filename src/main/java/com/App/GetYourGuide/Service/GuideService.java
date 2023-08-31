@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -32,11 +33,11 @@ public class GuideService {
             for (OrderDetails order : guide.getTours()) {
                 if (!order.getTourDate().equals(date) || guide.getDaysOffSinceLastTrip() >= 2) {
                     availableGuides.add(guide);
+                    availableGuides.sort(Comparator.comparingLong(Guide::getDaysOffSinceLastTrip).reversed());
                 }
             }
         }
 
         return availableGuides;
     }
-
 }

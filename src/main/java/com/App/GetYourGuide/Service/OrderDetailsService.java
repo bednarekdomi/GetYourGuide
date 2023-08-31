@@ -1,7 +1,6 @@
 package com.App.GetYourGuide.Service;
 
 import com.App.GetYourGuide.Mapper.OrderDetailsMapper;
-import com.App.GetYourGuide.Repository.GuideRepository;
 import com.App.GetYourGuide.Repository.OrderDetailsRepository;
 import com.App.GetYourGuide.domain.*;
 import lombok.Data;
@@ -9,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,15 +36,10 @@ public class OrderDetailsService {
 
     public void createOrder(Customer customer, LocalDate date) {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
-        OrderDetails orderToCreate = new OrderDetails();
-
         if (availableGuide.isEmpty()) {
             System.out.println("No guides available for this day");
         } else {
-            availableGuide.sort(Comparator.comparingLong(Guide::getDaysOffSinceLastTrip).reversed());
-            orderToCreate.setGuide(availableGuide.get(0));
-            orderToCreate.setTourDate(date);
-            orderDetailsRepository.save(orderToCreate);
+           setGuideToOrder(date, availableGuide);
             emailService.sendEmail(new MailDetails(
               customer.getEmail(),
                     "A new order has been created",
@@ -55,6 +47,13 @@ public class OrderDetailsService {
                             + "has been created. You can pay for your order within two days otherwise it will be cancelled"
             ));
         }
+    }
+
+    public void setGuideToOrder(LocalDate date, List<Guide>availableGuides){
+        OrderDetails orderToCreate = new OrderDetails();
+        orderToCreate.setGuide(availableGuides.get(0));
+        orderToCreate.setTourDate(date);
+        orderDetailsRepository.save(orderToCreate);
     }
 
 }
