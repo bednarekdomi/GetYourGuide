@@ -10,12 +10,13 @@ import org.mapstruct.Mapping;
 import java.util.List;
 import java.util.Optional;
 
-@Mapper(componentModel = "spring")
+@Mapper(uses = {OrderDetailsMapper.class}, componentModel = "spring")
 public interface GuideMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "isAvailable", target = "isAvailable")
+    @Mapping(source = "tours", target = "tours")
+    @Mapping(source = "daysOffSinceLastTrip", target = "daysOffSinceLastTrip")
     Guide mapToGuide(GuideDto guideDto);
 
     @InheritInverseConfiguration

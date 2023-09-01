@@ -16,5 +16,6 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long
         orderToCreate.setGuide(availableGuides.get(0));
         orderToCreate.setTourDate(date);
         save(orderToCreate);
+        return orderToCreate;
     }
 }

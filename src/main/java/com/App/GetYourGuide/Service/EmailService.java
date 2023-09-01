@@ -1,7 +1,5 @@
 package com.App.GetYourGuide.Service;
 
-
-import com.App.GetYourGuide.domain.Customer;
 import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.OrderDetails;
 import lombok.RequiredArgsConstructor;
