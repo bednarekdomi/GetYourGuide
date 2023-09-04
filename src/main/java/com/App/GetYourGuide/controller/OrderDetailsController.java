@@ -17,20 +17,21 @@ public class OrderDetailsController {
 
     private final OrderDetailsService orderDetailsService;
 
-    @GetMapping("/getOrderById")
-    public Optional<OrderDetailsDto> getOrderById(@RequestParam long orderId){
-        return orderDetailsService.getOrder(orderId);
-    }
-
-    @GetMapping("/deleteOrderById")
-    public void deleteOrderById(@RequestParam long orderId){
-        orderDetailsService.deleteOrder(orderId);
-    }
-
     @PostMapping("/createOrder")
     public ResponseEntity<String> createOrderForTheDate(@RequestParam Customer customer, LocalDate date) {
         orderDetailsService.createOrder(customer, date);
         return ResponseEntity.ok("Order placed successfully");
     }
+    @GetMapping("/getOrderById")
+    public Optional<OrderDetailsDto> getOrderById(@RequestParam long orderId){
+        return orderDetailsService.getOrder(orderId);
+    }
+    @GetMapping("/deleteOrderById")
+    public void deleteOrderById(@RequestParam long orderId){
+        orderDetailsService.deleteOrder(orderId);
+    }
+
+
+
 
 }
