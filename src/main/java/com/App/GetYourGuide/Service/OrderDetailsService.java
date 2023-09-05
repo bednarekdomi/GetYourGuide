@@ -41,14 +41,14 @@ public class OrderDetailsService {
         emailService.sendMailAfterCreatingOrder(newOrder);
     }
 
-    public OrderDetails updateOrderDetails(Long orderId, LocalDate newDate) {
+    public OrderDetailsDto updateOrderDetails(Long orderId, LocalDate newDate) {
         Optional<OrderDetails> optionalOrder = orderDetailsRepository.findById(orderId);
 
         if (optionalOrder.isEmpty()) throw new IllegalArgumentException("Order with ID " + orderId + " not found");
 
         OrderDetails order = optionalOrder.get();
         order.setTourDate(newDate);
-        return orderDetailsRepository.save(order);
+        return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.save(order));
 
     }
 }

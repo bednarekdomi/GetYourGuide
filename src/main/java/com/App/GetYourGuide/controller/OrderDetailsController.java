@@ -32,6 +32,9 @@ public class OrderDetailsController {
     }
 
 
-
+    @PutMapping("/changeTourDate")
+    public OrderDetailsDto updateTourDate(Long orderId, LocalDate newDate){
+        return orderDetailsService.updateOrderDetails(orderId, newDate);
+    }
 
 }
