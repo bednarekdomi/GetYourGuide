@@ -2,7 +2,7 @@ package com.App.GetYourGuide.controller;
 
 import com.App.GetYourGuide.Service.OrderDetailsService;
 import com.App.GetYourGuide.domain.Customer;
-import com.App.GetYourGuide.domain.OrderDetailsDto;
+import com.App.GetYourGuide.domain.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class OrderDetailsController {
         return ResponseEntity.ok("Order placed successfully");
     }
     @GetMapping("/getOrderById")
-    public Optional<OrderDetailsDto> getOrderById(@RequestParam long orderId){
+    public Optional<OrderDto> getOrderById(@RequestParam long orderId){
         return orderDetailsService.getOrder(orderId);
     }
     @GetMapping("/deleteOrderById")
@@ -33,7 +33,7 @@ public class OrderDetailsController {
 
 
     @PutMapping("/changeTourDate")
-    public OrderDetailsDto updateTourDate(Long orderId, LocalDate newDate){
+    public OrderDto updateTourDate(Long orderId, LocalDate newDate){
         return orderDetailsService.updateOrderDetails(orderId, newDate);
     }
 

@@ -1,7 +1,33 @@
 package com.App.GetYourGuide.domain;
 
-public interface Order {
-    String getDescription();
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    double getCost();
+import java.time.LocalDate;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long orderId;
+    private TypeOfOrder typeOfOrder;
+    @ManyToOne
+    @JoinColumn(name = "guide_id")
+    private Guide guide;
+    private LocalDate tourDate;
+    private boolean isPaid;
+    private boolean isVerified;
+    private boolean isSubmitted;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+
 }

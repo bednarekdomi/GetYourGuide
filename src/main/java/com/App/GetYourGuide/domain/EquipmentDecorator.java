@@ -1,19 +1,19 @@
 package com.App.GetYourGuide.domain;
 
-public class EquipmentDecorator implements Order{
-    private final Order order;
+public class EquipmentDecorator implements TypeOfOrder {
+    private final TypeOfOrder typeOfOrder;
 
-    public EquipmentDecorator(Order order) {
-        this.order = order;
+    public EquipmentDecorator(TypeOfOrder typeOfOrder) {
+        this.typeOfOrder = typeOfOrder;
     }
 
     @Override
     public String getDescription() {
-        return order.getDescription() + ", with equipment rental";
+        return typeOfOrder.getDescription() + ", with equipment rental";
     }
 
     @Override
     public double getCost() {
-        return order.getCost() + 50;
+        return typeOfOrder.getCost() + 50;
     }
 }

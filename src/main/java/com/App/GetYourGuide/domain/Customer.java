@@ -18,6 +18,6 @@ public class Customer {
     private String name;
     private String email;
     @OneToMany
-    private List<OrderDetails> orderedTours;
+    private List<Order> orderedTours;
 
 }

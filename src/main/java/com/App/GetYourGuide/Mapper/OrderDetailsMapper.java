@@ -1,7 +1,7 @@
 package com.App.GetYourGuide.Mapper;
 
-import com.App.GetYourGuide.domain.OrderDetails;
-import com.App.GetYourGuide.domain.OrderDetailsDto;
+import com.App.GetYourGuide.domain.Order;
+import com.App.GetYourGuide.domain.OrderDto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -18,15 +18,15 @@ public interface OrderDetailsMapper {
     @Mapping(source = "isPaid", target = "isPaid")
     @Mapping(source = "isVerified", target = "isVerified")
     @Mapping(source = "isSubmitted", target = "isSubmitted")
-    OrderDetails mapToOrderDetails(OrderDetailsDto orderDetailsDto);
+    Order mapToOrderDetails(OrderDto orderDto);
 
     @InheritInverseConfiguration
-    OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails);
+    OrderDto mapToOrderDetailsDto(Order order);
 
-    @IterableMapping(elementTargetType = OrderDetailsDto.class)
-    List<OrderDetailsDto>mapToOrderDetailsDtoList(List<OrderDetails> Orders);
+    @IterableMapping(elementTargetType = OrderDto.class)
+    List<OrderDto>mapToOrderDetailsDtoList(List<Order> Orders);
 
-    default Optional<OrderDetailsDto> mapToOrderDetailsDto(Optional<OrderDetails> orderDetails){
+    default Optional<OrderDto> mapToOrderDetailsDto(Optional<Order> orderDetails){
         return orderDetails.map(this::mapToOrderDetailsDto);
     }
 }

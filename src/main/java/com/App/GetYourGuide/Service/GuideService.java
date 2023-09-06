@@ -4,7 +4,7 @@ import com.App.GetYourGuide.Mapper.GuideMapper;
 import com.App.GetYourGuide.Repository.GuideRepository;
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.GuideDto;
-import com.App.GetYourGuide.domain.OrderDetails;
+import com.App.GetYourGuide.domain.Order;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class GuideService {
         List<Guide> availableGuides = new ArrayList<>();
         List<Guide> allGuides = guideRepository.findAll();
         for (Guide guide : allGuides) {
-            for (OrderDetails order : guide.getTours()) {
+            for (Order order : guide.getTours()) {
                 if (!order.getTourDate().equals(date) || guide.getDaysOffSinceLastTrip() >= 2) {
                     availableGuides.add(guide);
                     availableGuides.sort(Comparator.comparingLong(Guide::getDaysOffSinceLastTrip).reversed());

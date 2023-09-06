@@ -1,6 +1,6 @@
 package com.App.GetYourGuide.domain;
 
-public class GuidedTour implements Order{
+public class GuidedTour implements TypeOfOrder {
     @Override
     public String getDescription() {
         return "Guided tour";

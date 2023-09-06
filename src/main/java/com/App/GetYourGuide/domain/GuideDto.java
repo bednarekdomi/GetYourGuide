@@ -13,6 +13,6 @@ public class GuideDto {
 
     private long id;
     private String name;
-    private List<OrderDetailsDto> tours;
+    private List<OrderDto> tours;
     private long daysOffSinceLastTrip;
 }

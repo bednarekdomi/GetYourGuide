@@ -1,7 +1,7 @@
 package com.App.GetYourGuide.Service;
 
 import com.App.GetYourGuide.domain.MailDetails;
-import com.App.GetYourGuide.domain.OrderDetails;
+import com.App.GetYourGuide.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class EmailService {
         return mailMessage;
     }
 
-    public void sendMailAfterCreatingOrder(OrderDetails newOrder){
+    public void sendMailAfterCreatingOrder(Order newOrder){
         sendEmail(new MailDetails(
                 newOrder.getCustomer().getEmail(),
                 "A new order has been created",

@@ -9,5 +9,5 @@ public class CustomerDto {
 
     private Long customerId;
     private String email;
-    private List<OrderDetailsDto> orderedTours;
+    private List<OrderDto> orderedTours;
 }
