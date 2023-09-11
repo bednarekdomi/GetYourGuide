@@ -1,7 +1,6 @@
 package com.App.GetYourGuide.domain;
 
-public interface TypeOfOrder {
+public interface Tour {
     String getDescription();
-
     double getCost();
 }

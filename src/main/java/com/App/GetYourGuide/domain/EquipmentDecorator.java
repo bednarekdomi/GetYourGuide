@@ -1,19 +1,23 @@
 package com.App.GetYourGuide.domain;
 
-public class EquipmentDecorator implements TypeOfOrder {
-    private final TypeOfOrder typeOfOrder;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 
-    public EquipmentDecorator(TypeOfOrder typeOfOrder) {
-        this.typeOfOrder = typeOfOrder;
+@Entity
+@NoArgsConstructor
+public class EquipmentDecorator extends OrderDecorator {
+
+    public EquipmentDecorator(Tour decoratedTour) {
+        super(decoratedTour);
     }
 
     @Override
     public String getDescription() {
-        return typeOfOrder.getDescription() + ", with equipment rental";
+        return super.getDescription() + ", with equipment rental";
     }
 
     @Override
     public double getCost() {
-        return typeOfOrder.getCost() + 50;
+        return super.getCost() + 50;
     }
 }

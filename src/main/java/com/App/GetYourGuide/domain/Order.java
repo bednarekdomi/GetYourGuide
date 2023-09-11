@@ -17,7 +17,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
-    private TypeOfOrder typeOfOrder;
+    @OneToOne
+    private OrderDecorator orderDecorator;
     @ManyToOne
     @JoinColumn(name = "guide_id")
     private Guide guide;

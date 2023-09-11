@@ -1,13 +1,13 @@
 package com.App.GetYourGuide.domain;
 
-public class GuidedTour extends OrderDecorator {
+public class BasicTour implements Tour{
     @Override
     public String getDescription() {
-        return "Guided tour";
+        return "Mountain trip with a guide";
     }
 
     @Override
     public double getCost() {
-        return 200;
+        return 500;
     }
 }

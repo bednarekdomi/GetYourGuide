@@ -1,19 +1,22 @@
 package com.App.GetYourGuide.domain;
 
-public class InsuranceDecorator implements TypeOfOrder {
-    private TypeOfOrder typeOfOrder;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 
-    public InsuranceDecorator(TypeOfOrder typeOfOrder) {
-        this.typeOfOrder = typeOfOrder;
+@Entity
+@NoArgsConstructor
+public class InsuranceDecorator extends OrderDecorator {
+    public InsuranceDecorator(Tour decoratedTour){
+        super(decoratedTour);
     }
 
     @Override
     public String getDescription() {
-        return typeOfOrder.getDescription() + ", with mountaineering insurance";
+        return decoratedTour.getDescription() + ", with mountaineering insurance";
     }
 
     @Override
     public double getCost() {
-        return typeOfOrder.getCost() + 100;
+        return decoratedTour.getCost() + 100;
     }
 }
