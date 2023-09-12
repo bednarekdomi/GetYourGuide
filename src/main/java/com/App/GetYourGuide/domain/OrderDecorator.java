@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class OrderDecorator implements Tour {
+public class OrderDecorator extends Tour {
 
     public OrderDecorator(Tour decoratedTour) {
         this.decoratedTour = decoratedTour;
@@ -17,13 +17,15 @@ public abstract class OrderDecorator implements Tour {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "decorated_tour_id")
     protected Tour decoratedTour;
 
     public String getDescription() {
-        return decoratedTour.getDescription();
+        return "Mountain trip with a guide" + decoratedTour.getDescription();
     }
 
     public double getCost() {
-        return decoratedTour.getCost();
+        return 500 + decoratedTour.getCost();
     }
 }
