@@ -1,6 +1,6 @@
 package com.App.GetYourGuide.controller;
 
-import com.App.GetYourGuide.Service.GuideService;
+import com.App.GetYourGuide.service.GuideService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

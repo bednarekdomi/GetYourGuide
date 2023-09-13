@@ -1,6 +1,6 @@
 package com.App.GetYourGuide.controller;
 
-import com.App.GetYourGuide.Service.OrderService;
+import com.App.GetYourGuide.service.OrderService;
 import com.App.GetYourGuide.domain.Customer;
 import com.App.GetYourGuide.domain.OrderDto;
 import lombok.RequiredArgsConstructor;

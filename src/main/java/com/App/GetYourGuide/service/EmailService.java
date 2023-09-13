@@ -1,4 +1,4 @@
-package com.App.GetYourGuide.Service;
+package com.App.GetYourGuide.service;
 
 import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.Order;

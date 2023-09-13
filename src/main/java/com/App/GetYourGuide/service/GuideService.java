@@ -1,7 +1,7 @@
-package com.App.GetYourGuide.Service;
+package com.App.GetYourGuide.service;
 
-import com.App.GetYourGuide.Mapper.GuideMapper;
-import com.App.GetYourGuide.Repository.GuideRepository;
+import com.App.GetYourGuide.mapper.GuideMapper;
+import com.App.GetYourGuide.repository.GuideRepository;
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.GuideDto;
 import com.App.GetYourGuide.domain.Order;

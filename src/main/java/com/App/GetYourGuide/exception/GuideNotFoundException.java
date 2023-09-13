@@ -1,4 +1,4 @@
-package com.App.GetYourGuide.Exception;
+package com.App.GetYourGuide.exception;
 
 public class GuideNotFoundException extends RuntimeException{
 

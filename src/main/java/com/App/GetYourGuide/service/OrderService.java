@@ -1,7 +1,7 @@
-package com.App.GetYourGuide.Service;
+package com.App.GetYourGuide.service;
 
-import com.App.GetYourGuide.Mapper.OrderMapper;
-import com.App.GetYourGuide.Repository.OrderRepository;
+import com.App.GetYourGuide.mapper.OrderMapper;
+import com.App.GetYourGuide.repository.OrderRepository;
 import com.App.GetYourGuide.domain.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.App.GetYourGuide.Repository;
+package com.App.GetYourGuide.repository;
 
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.Order;

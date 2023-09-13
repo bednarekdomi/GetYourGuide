@@ -1,4 +1,4 @@
-package com.App.GetYourGuide.Mapper;
+package com.App.GetYourGuide.mapper;
 
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.GuideDto;
