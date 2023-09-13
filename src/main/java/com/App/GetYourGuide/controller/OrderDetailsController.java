@@ -1,6 +1,6 @@
 package com.App.GetYourGuide.controller;
 
-import com.App.GetYourGuide.Service.OrderDetailsService;
+import com.App.GetYourGuide.Service.OrderService;
 import com.App.GetYourGuide.domain.Customer;
 import com.App.GetYourGuide.domain.OrderDto;
 import lombok.RequiredArgsConstructor;
@@ -15,26 +15,26 @@ import java.util.Optional;
 @RequestMapping("/getYourGuide/order")
 public class OrderDetailsController {
 
-    private final OrderDetailsService orderDetailsService;
+    private final OrderService orderService;
 
     @PostMapping("/createOrder")
     public ResponseEntity<String> createOrderForTheDate(@RequestParam Customer customer, LocalDate date) {
-        orderDetailsService.createOrder(customer, date);
+        orderService.createOrder(customer, date);
         return ResponseEntity.ok("Order placed successfully");
     }
     @GetMapping("/getOrderById")
     public Optional<OrderDto> getOrderById(@RequestParam long orderId){
-        return orderDetailsService.getOrder(orderId);
+        return orderService.getOrder(orderId);
     }
     @GetMapping("/deleteOrderById")
     public void deleteOrderById(@RequestParam long orderId){
-        orderDetailsService.deleteOrder(orderId);
+        orderService.deleteOrder(orderId);
     }
 
 
     @PutMapping("/changeTourDate")
     public OrderDto updateTourDate(Long orderId, LocalDate newDate){
-        return orderDetailsService.updateOrderDetails(orderId, newDate);
+        return orderService.updateOrderDetails(orderId, newDate);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.App.GetYourGuide.Service;
 
-import com.App.GetYourGuide.Mapper.OrderDetailsMapper;
-import com.App.GetYourGuide.Repository.OrderDetailsRepository;
+import com.App.GetYourGuide.Mapper.OrderMapper;
+import com.App.GetYourGuide.Repository.OrderRepository;
 import com.App.GetYourGuide.domain.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -14,40 +14,40 @@ import java.util.Optional;
 @Service
 @Data
 @RequiredArgsConstructor
-public class OrderDetailsService {
+public class OrderService {
 
-    private final OrderDetailsRepository orderDetailsRepository;
-    private final OrderDetailsMapper orderDetailsMapper;
+    private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
     private final EmailService emailService;
     private final GuideService guideService;
 
     public Optional<OrderDto> getOrder(long orderId) {
-        return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.findById(orderId));
+        return orderMapper.mapToOrderDetailsDto(orderRepository.findById(orderId));
     }
 
     public List<OrderDto> getAllOrders() {
-        return orderDetailsMapper.mapToOrderDetailsDtoList(orderDetailsRepository.findAll());
+        return orderMapper.mapToOrderDetailsDtoList(orderRepository.findAll());
     }
 
     public void deleteOrder(Long orderId) {
-        orderDetailsRepository.deleteById(orderId);
+        orderRepository.deleteById(orderId);
     }
 
     public void createOrder(Customer customer, LocalDate date) {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
         if (availableGuide.isEmpty()) System.out.println("No guides available for this day");
-        Order newOrder = orderDetailsRepository.setGuideToOrder(date, availableGuide);
+        Order newOrder = orderRepository.setGuideToOrder(date, availableGuide);
         emailService.sendMailAfterCreatingOrder(newOrder);
     }
 
     public OrderDto updateOrderDetails(Long orderId, LocalDate newDate) {
-        Optional<Order> optionalOrder = orderDetailsRepository.findById(orderId);
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
         if (optionalOrder.isEmpty()) throw new IllegalArgumentException("Order with ID " + orderId + " not found");
 
         Order order = optionalOrder.get();
         order.setTourDate(newDate);
-        return orderDetailsMapper.mapToOrderDetailsDto(orderDetailsRepository.save(order));
+        return orderMapper.mapToOrderDetailsDto(orderRepository.save(order));
 
     }
 }

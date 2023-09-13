@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Mapper(uses = {GuideMapper.class}, componentModel = "spring")
-public interface OrderDetailsMapper {
+public interface OrderMapper {
 
     @Mapping(source = "orderId", target = "orderId")
     @Mapping(source = "guideDto", target = "guide")

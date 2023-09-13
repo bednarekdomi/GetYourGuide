@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface OrderDetailsRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
     default Order setGuideToOrder(LocalDate date, List<Guide> availableGuides){
         Order orderToCreate = new Order();
