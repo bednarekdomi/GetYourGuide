@@ -28,7 +28,7 @@ public class OrderDetailsController {
     }
     @GetMapping("/deleteOrderById")
     public void deleteOrderById(@RequestParam long orderId){
-        orderService.deleteOrder(orderId);
+        orderService.cancelOrder(orderId);
     }
 
 

@@ -29,8 +29,15 @@ public class OrderService {
         return orderMapper.mapToOrderDetailsDtoList(orderRepository.findAll());
     }
 
-    public void deleteOrder(Long orderId) {
-        orderRepository.deleteById(orderId);
+    public void cancelOrder(Long orderId) {
+        if(orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2))){
+            orderRepository.deleteById(orderId);
+            System.out.println("Your order is cancelled");
+
+        }
+
+        System.out.println("Less than two days left until the mountain hike - deleting the order is not possible");
+
     }
 
     public void createOrder(Customer customer, LocalDate date) {
