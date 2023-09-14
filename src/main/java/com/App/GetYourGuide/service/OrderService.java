@@ -33,7 +33,7 @@ public class OrderService {
         if(orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2))){
             orderRepository.deleteById(orderId);
             System.out.println("Your order is cancelled");
-
+            refundPayment(orderId);
         }
 
         System.out.println("Less than two days left until the mountain hike - deleting the order is not possible");
@@ -56,5 +56,10 @@ public class OrderService {
         order.setTourDate(newDate);
         return orderMapper.mapToOrderDetailsDto(orderRepository.save(order));
 
+    }
+
+    public double refundPayment(Long orderId){
+        double payment = orderRepository.getReferenceById(orderId).getOrderDecorator().getCost();
+        return payment;
     }
 }
