@@ -29,15 +29,15 @@ public class OrderService {
         return orderMapper.mapToOrderDetailsDtoList(orderRepository.findAll());
     }
 
-    public void cancelOrder(Long orderId) {
+    public double cancelOrder(Long orderId) {
         if(orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2))){
             orderRepository.deleteById(orderId);
-            System.out.println("Your order is cancelled");
-            refundPayment(orderId);
+            System.out.println("Your order is cancelled. The entire deposit will be refunded");
+            return refundPayment(orderId);
         }
-
-        System.out.println("Less than two days left until the mountain hike - deleting the order is not possible");
-
+        double PaymentToRefund = refundPayment(orderId)/2;
+        System.out.println("There are less than two days left until the ordered mountain tour - only half the amount will be refunded");
+        return PaymentToRefund;
     }
 
     public void createOrder(Customer customer, LocalDate date) {
@@ -59,7 +59,6 @@ public class OrderService {
     }
 
     public double refundPayment(Long orderId){
-        double payment = orderRepository.getReferenceById(orderId).getOrderDecorator().getCost();
-        return payment;
+        return orderRepository.getReferenceById(orderId).getOrderDecorator().getCost();
     }
 }
