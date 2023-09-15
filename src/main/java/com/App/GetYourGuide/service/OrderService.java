@@ -20,7 +20,6 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final EmailService emailService;
     private final GuideService guideService;
-    private static final String CANCELLED_ORDER = "You cancelled the order";
 
     public Optional<OrderDto> getOrder(long orderId) {
         return orderMapper.mapToOrderDetailsDto(orderRepository.findById(orderId));
@@ -33,17 +32,11 @@ public class OrderService {
     public double cancelOrder(Long orderId) {
         if(orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2))){
             orderRepository.deleteById(orderId);
-            emailService.sendEmail(new MailDetails(orderRepository.getReferenceById(orderId).getCustomer().getEmail(),
-                    CANCELLED_ORDER, "Hello " +  orderRepository.getReferenceById(orderId).getCustomer().getName() +
-                    "Your order number" + orderRepository.getReferenceById(orderId).getOrderId() + "is cancelled. The entire deposit will be refunded"));
+            emailService.earlyCancellationEmail(orderRepository.getReferenceById(orderId));
             return refundPayment(orderId);
         }
         double PaymentToRefund = refundPayment(orderId)/2;
-        emailService.sendEmail(new MailDetails(orderRepository.getReferenceById(orderId).getCustomer().getEmail(),
-                CANCELLED_ORDER, "Hello " +  orderRepository.getReferenceById(orderId).getCustomer().getName() +
-                "Your order number" + orderRepository.getReferenceById(orderId).getOrderId()
-                + "is cancelled. There were less than two days left until the ordered mountain tour - only half the amount will be refunded - " +
-                PaymentToRefund + " ."));
+        emailService.laterCancellationEmail(orderRepository.getReferenceById(orderId));
         return PaymentToRefund;
     }
 
@@ -51,7 +44,7 @@ public class OrderService {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
         if (availableGuide.isEmpty()) System.out.println("No guides available for this day");
         Order newOrder = orderRepository.setGuideToOrder(date, availableGuide);
-        emailService.sendMailAfterCreatingOrder(newOrder);
+        emailService.sendEmailAfterCreatingOrder(newOrder);
     }
 
     public OrderDto updateOrderDetails(Long orderId, LocalDate newDate) {
