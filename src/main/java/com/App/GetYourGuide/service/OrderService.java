@@ -20,6 +20,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final EmailService emailService;
     private final GuideService guideService;
+    private static final String CANCELLED_ORDER = "You cancelled the order";
 
     public Optional<OrderDto> getOrder(long orderId) {
         return orderMapper.mapToOrderDetailsDto(orderRepository.findById(orderId));
@@ -32,11 +33,17 @@ public class OrderService {
     public double cancelOrder(Long orderId) {
         if(orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2))){
             orderRepository.deleteById(orderId);
-            System.out.println("Your order is cancelled. The entire deposit will be refunded");
+            emailService.sendEmail(new MailDetails(orderRepository.getReferenceById(orderId).getCustomer().getEmail(),
+                    CANCELLED_ORDER, "Hello " +  orderRepository.getReferenceById(orderId).getCustomer().getName() +
+                    "Your order number" + orderRepository.getReferenceById(orderId).getOrderId() + "is cancelled. The entire deposit will be refunded"));
             return refundPayment(orderId);
         }
         double PaymentToRefund = refundPayment(orderId)/2;
-        System.out.println("There are less than two days left until the ordered mountain tour - only half the amount will be refunded");
+        emailService.sendEmail(new MailDetails(orderRepository.getReferenceById(orderId).getCustomer().getEmail(),
+                CANCELLED_ORDER, "Hello " +  orderRepository.getReferenceById(orderId).getCustomer().getName() +
+                "Your order number" + orderRepository.getReferenceById(orderId).getOrderId()
+                + "is cancelled. There were less than two days left until the ordered mountain tour - only half the amount will be refunded - " +
+                PaymentToRefund + " ."));
         return PaymentToRefund;
     }
 
