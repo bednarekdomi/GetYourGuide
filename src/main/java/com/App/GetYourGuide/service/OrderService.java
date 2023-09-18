@@ -5,6 +5,7 @@ import com.App.GetYourGuide.repository.OrderRepository;
 import com.App.GetYourGuide.domain.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,21 +30,20 @@ public class OrderService {
         return orderMapper.mapToOrderDetailsDtoList(orderRepository.findAll());
     }
 
-    public double cancelOrder(Long orderId) {
-        if(orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2))){
-            orderRepository.deleteById(orderId);
+    public void cancelOrder(Long orderId) {
+        orderRepository.deleteById(orderId);
+        if (orderRepository.getReferenceById(orderId).getTourDate().isBefore(LocalDate.now().minusDays(2)))
             emailService.earlyCancellationEmail(orderRepository.getReferenceById(orderId));
-            return refundPayment(orderId);
-        }
-        double PaymentToRefund = refundPayment(orderId)/2;
         emailService.laterCancellationEmail(orderRepository.getReferenceById(orderId));
-        return PaymentToRefund;
     }
 
     public void createOrder(Customer customer, LocalDate date) {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
         if (availableGuide.isEmpty()) System.out.println("No guides available for this day");
-        Order newOrder = orderRepository.setGuideToOrder(date, availableGuide);
+        Order newOrder = new Order();
+        newOrder.setTourDate(date);
+        newOrder.setGuide(availableGuide.get(0));
+        newOrder.setCustomer(customer);
         emailService.sendEmailAfterCreatingOrder(newOrder);
     }
 
@@ -58,7 +58,7 @@ public class OrderService {
 
     }
 
-    public double refundPayment(Long orderId){
+    public double refundPayment(Long orderId) {
         return orderRepository.getReferenceById(orderId).getOrderDecorator().getCost();
     }
 }
