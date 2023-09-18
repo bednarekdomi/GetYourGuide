@@ -43,6 +43,9 @@ public class OrderService {
         newOrder.setTourDate(date);
         newOrder.setGuide(availableGuide.get(0));
         newOrder.setCustomer(customer);
+        newOrder.setTour(new BasicOrderDecorator());
+        newOrder.setOrderCost(newOrder.getOrderCost());
+        newOrder.setTourDescription(newOrder.getTourDescription());
         emailService.sendEmailAfterCreatingOrder(newOrder);
     }
 
@@ -58,6 +61,6 @@ public class OrderService {
     }
 
     public double refundPayment(Long orderId) {
-        return orderRepository.getReferenceById(orderId).getBasicOrderDecorator().getCost();
+        return orderRepository.getReferenceById(orderId).getOrderCost();
     }
 }

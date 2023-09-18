@@ -17,10 +17,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
-
-    @OneToOne
-    @JoinColumn(name = "order_id")
-    private BasicOrderDecorator basicOrderDecorator;
+    @Transient
+    private TourOrder tour;
     @ManyToOne
     @JoinColumn(name = "guide_id")
     private Guide guide;
@@ -31,6 +29,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+    private String tourDescription = tour.getDescription();
+    private double orderCost = tour.getCost();
+
 
 
 }

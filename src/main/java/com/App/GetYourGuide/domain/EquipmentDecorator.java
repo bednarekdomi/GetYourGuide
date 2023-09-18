@@ -1,8 +1,5 @@
 package com.App.GetYourGuide.domain;
 
-import jakarta.persistence.Entity;
-
-@Entity
 public class EquipmentDecorator extends TourOrderDecorator {
 
     public EquipmentDecorator(TourOrder tourOrder) {

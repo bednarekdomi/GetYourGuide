@@ -1,8 +1,5 @@
 package com.App.GetYourGuide.domain;
 
-import jakarta.persistence.*;
-
-@Entity
 public class BasicOrderDecorator implements TourOrder {
 
     @Override
