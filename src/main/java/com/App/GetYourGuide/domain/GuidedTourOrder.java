@@ -1,6 +1,6 @@
 package com.App.GetYourGuide.domain;
 
-public class GuidedTour extends OrderDecorator {
+public class GuidedTourOrder extends BasicOrderDecorator {
     @Override
     public String getDescription() {
         return "Guided tour";

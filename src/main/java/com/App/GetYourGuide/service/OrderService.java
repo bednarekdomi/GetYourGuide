@@ -5,7 +5,6 @@ import com.App.GetYourGuide.repository.OrderRepository;
 import com.App.GetYourGuide.domain.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -59,6 +58,6 @@ public class OrderService {
     }
 
     public double refundPayment(Long orderId) {
-        return orderRepository.getReferenceById(orderId).getOrderDecorator().getCost();
+        return orderRepository.getReferenceById(orderId).getBasicOrderDecorator().getCost();
     }
 }

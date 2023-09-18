@@ -1,14 +1,12 @@
 package com.App.GetYourGuide.domain;
 
 import jakarta.persistence.Entity;
-import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-public class EquipmentDecorator extends OrderDecorator {
+public class EquipmentDecorator extends TourOrderDecorator {
 
-    public EquipmentDecorator(Tour decoratedTour) {
-        super(decoratedTour);
+    public EquipmentDecorator(TourOrder tourOrder) {
+        super(tourOrder);
     }
 
     @Override

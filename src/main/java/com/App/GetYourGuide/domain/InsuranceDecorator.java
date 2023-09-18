@@ -1,22 +1,25 @@
 package com.App.GetYourGuide.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-public class InsuranceDecorator extends OrderDecorator {
-    public InsuranceDecorator(Tour decoratedTour){
-        super(decoratedTour);
+public class InsuranceDecorator extends TourOrderDecorator {
+
+    public InsuranceDecorator(TourOrder tourOrder) {
+        super(tourOrder);
     }
+
 
     @Override
     public String getDescription() {
-        return decoratedTour.getDescription() + ", with mountaineering insurance";
+        return super.getDescription() + ", with mountaineering insurance";
     }
 
     @Override
     public double getCost() {
-        return decoratedTour.getCost() + 100;
+        return super.getCost() + 100;
     }
 }

@@ -20,7 +20,7 @@ public class Order {
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private OrderDecorator orderDecorator;
+    private BasicOrderDecorator basicOrderDecorator;
     @ManyToOne
     @JoinColumn(name = "guide_id")
     private Guide guide;
