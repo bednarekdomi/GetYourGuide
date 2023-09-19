@@ -39,13 +39,10 @@ public class OrderService {
     public void createOrder(Customer customer, LocalDate date) {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
         if (availableGuide.isEmpty()) System.out.println("No guides available for this day");
-        Order newOrder = new Order();
-        newOrder.setTourDate(date);
-        newOrder.setGuide(availableGuide.get(0));
-        newOrder.setCustomer(customer);
-        newOrder.setTour(new BasicOrderDecorator());
-        newOrder.setOrderCost(newOrder.getOrderCost());
-        newOrder.setTourDescription(newOrder.getTourDescription());
+        BasicOrderDecorator basicOrderDecorator = new BasicOrderDecorator();
+        Order newOrder = new Order(basicOrderDecorator, availableGuide.get(0), date, false, false, false, customer,
+                basicOrderDecorator.getDescription(), basicOrderDecorator.getCost());
+        orderRepository.save(newOrder);
         emailService.sendEmailAfterCreatingOrder(newOrder);
     }
 
