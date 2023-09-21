@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 import java.util.Optional;
 
-@Mapper(uses = {GuideMapper.class}, componentModel = "spring")
+@Mapper(uses = {GuideMapper.class, CustomerMapper.class}, componentModel = "spring")
 public interface OrderMapper {
 
     @Mapping(source = "orderId", target = "orderId")
