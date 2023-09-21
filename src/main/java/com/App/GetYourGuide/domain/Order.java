@@ -29,12 +29,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    private String tourDescription = tour.getDescription();
-    private double orderCost = tour.getCost();
-
 
     public Order(TourOrder tour, Guide guide, LocalDate tourDate, boolean isPaid, boolean isVerified, boolean isSubmitted,
-                 Customer customer, String tourDescription, double orderCost) {
+                 Customer customer) {
         this.tour = tour;
         this.guide = guide;
         this.tourDate = tourDate;
@@ -42,7 +39,5 @@ public class Order {
         this.isVerified = isVerified;
         this.isSubmitted = isSubmitted;
         this.customer = customer;
-        this.tourDescription = tourDescription;
-        this.orderCost = orderCost;
     }
 }

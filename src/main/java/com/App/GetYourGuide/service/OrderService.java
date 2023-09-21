@@ -40,8 +40,7 @@ public class OrderService {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
         if (availableGuide.isEmpty()) System.out.println("No guides available for this day");
         BasicOrderDecorator basicOrderDecorator = new BasicOrderDecorator();
-        Order newOrder = new Order(basicOrderDecorator, availableGuide.get(0), date, false, false, false, customer,
-                basicOrderDecorator.getDescription(), basicOrderDecorator.getCost());
+        Order newOrder = new Order(basicOrderDecorator, availableGuide.get(0), date, false, false, false, customer);
         orderRepository.save(newOrder);
         emailService.sendEmailAfterCreatingOrder(newOrder);
     }
@@ -58,6 +57,6 @@ public class OrderService {
     }
 
     public double refundPayment(Long orderId) {
-        return orderRepository.getReferenceById(orderId).getOrderCost();
+        return orderRepository.getReferenceById(orderId).getTour().getCost();
     }
 }

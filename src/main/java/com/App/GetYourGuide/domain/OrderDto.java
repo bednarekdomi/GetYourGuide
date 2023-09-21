@@ -19,6 +19,4 @@ public class OrderDto {
     private boolean isVerified;
     private boolean isSubmitted;
     private CustomerDto customerDto;
-    private String tourDescription = tour.getDescription();
-    private double orderCost = tour.getCost();
 }

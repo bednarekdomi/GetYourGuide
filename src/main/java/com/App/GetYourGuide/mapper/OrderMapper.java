@@ -14,10 +14,12 @@ import java.util.Optional;
 public interface OrderMapper {
 
     @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source="tour", target = "tour")
     @Mapping(source = "guideDto", target = "guide")
     @Mapping(source = "isPaid", target = "isPaid")
     @Mapping(source = "isVerified", target = "isVerified")
     @Mapping(source = "isSubmitted", target = "isSubmitted")
+    @Mapping(source="customerDto", target = "customer")
     Order mapToOrderDetails(OrderDto orderDto);
 
     @InheritInverseConfiguration
