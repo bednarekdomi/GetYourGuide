@@ -33,12 +33,12 @@ class OrderServiceTest {
     private Order orderOne;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         TourOrder firstOrderDecorator = new InsuranceDecorator(new EquipmentDecorator(new BasicOrderDecorator()));
         orderOne = new Order(1L, firstOrderDecorator, new Guide(), LocalDate.of(2023, 9, 30), true, true, true,
-                new Customer(), firstOrderDecorator.getDescription(), firstOrderDecorator.getCost());
+                new Customer());
         orderOneDto = new OrderDto(1L, firstOrderDecorator, new GuideDto(), LocalDate.of(2023, 9, 30), true,
-                true, true, new CustomerDto(), firstOrderDecorator.getDescription(), firstOrderDecorator.getCost());
+                true, true, new CustomerDto());
     }
 
     @Test
@@ -51,6 +51,9 @@ class OrderServiceTest {
         //Then
         assertTrue(order.isPresent());
         assertEquals(orderOneDto, order.get());
+        assertEquals(650, order.get().getTour().getCost());
+        assertEquals("Mountain trip with a guide, with equipment rental, with mountaineering insurance", order.get()
+                .getTour().getDescription());
     }
 
     @Test
@@ -66,10 +69,12 @@ class OrderServiceTest {
     }
 
     @Test
-    void updateOrderDetails() {
+    void shouldUpdateOrder() {
+
     }
 
     @Test
-    void refundPayment() {
+    void shouldReturnRefundPayment() {
+
     }
 }

@@ -13,15 +13,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Table(name = "Guides")
 public class Guide {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "guide_id")
-    private long id;
+    private long Id;
     private String name;
-    @OneToMany(
-            mappedBy = "guide",
+
+    @OneToMany(mappedBy = "guide",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Order> tours;

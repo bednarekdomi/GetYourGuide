@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "Orders")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,15 +20,16 @@ public class Order {
     private Long orderId;
     @Transient
     private TourOrder tour;
+
     @ManyToOne
-    @JoinColumn(name = "guide_id")
+    @JoinColumn(name = "guide_id", nullable = false)
     private Guide guide;
     private LocalDate tourDate;
     private boolean isPaid;
     private boolean isVerified;
     private boolean isSubmitted;
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customerId")
     private Customer customer;
 
     public Order(TourOrder tour, Guide guide, LocalDate tourDate, boolean isPaid, boolean isVerified, boolean isSubmitted,

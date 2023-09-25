@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class GuideDto {
 
-    private long id;
+    private long Id;
     private String name;
     private List<OrderDto> tours;
     private long daysOffSinceLastTrip;
