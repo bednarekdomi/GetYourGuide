@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -61,7 +61,11 @@ class OrderServiceTest {
     }
 
     @Test
-    void cancelOrder() {
+    void shouldCancelOrder() {
+        //Given & When
+        orderService.cancelOrder(orderOne.getOrderId());
+        //Then
+        verify(orderRepository, times(1)).deleteById(orderOne.getOrderId());
     }
 
     @Test
@@ -70,11 +74,21 @@ class OrderServiceTest {
 
     @Test
     void shouldUpdateOrder() {
-
+        //Given
+        when(orderRepository.findById(1L)).thenReturn(Optional.ofNullable(orderOne));
+        //When
+        OrderDto updatedOrder = orderService.updateOrderDetails(1L, LocalDate.of(2023, 10, 30));
+        //Then
+        assertEquals(LocalDate.of(2023, 10, 30), updatedOrder.getTourDate());
     }
 
     @Test
     void shouldReturnRefundPayment() {
-
+        //Given
+        when(orderRepository.getReferenceById(1L)).thenReturn(orderOne);
+        //When
+        double refund = orderService.refundPayment(1L);
+        //Then
+        assertEquals(650, refund);
     }
 }
