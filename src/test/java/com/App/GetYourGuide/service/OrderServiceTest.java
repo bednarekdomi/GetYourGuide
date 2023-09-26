@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,17 +30,28 @@ class OrderServiceTest {
     private OrderMapper orderMapper;
     @Mock
     private OrderRepository orderRepository;
+    @Mock
+    private GuideService guideService;
 
     private OrderDto orderOneDto;
     private Order orderOne;
+    private Guide guideOne;
+    private final List<Order> guideOneTours = new ArrayList<>();
+    private Customer customerOne;
 
     @BeforeEach
     public void setUp() {
+        customerOne = new Customer();
         TourOrder firstOrderDecorator = new InsuranceDecorator(new EquipmentDecorator(new BasicOrderDecorator()));
-        orderOne = new Order(1L, firstOrderDecorator, new Guide(), LocalDate.of(2023, 9, 30), true, true, true,
-                new Customer());
+        orderOne = new Order(1L, firstOrderDecorator, guideOne, LocalDate.of(2023, 9, 30), true, true, true,
+                customerOne);
         orderOneDto = new OrderDto(1L, firstOrderDecorator, new GuideDto(), LocalDate.of(2023, 9, 30), true,
                 true, true, new CustomerDto());
+        Order orderTwo = new Order(2L, firstOrderDecorator, guideOne, LocalDate.of(2023, 10, 1), true, true, true, new Customer());
+        guideOneTours.add(orderOne);
+        guideOneTours.add(orderTwo);
+
+        guideOne = new Guide(1L, "Name Lastname", guideOneTours, 1);
     }
 
     @Test
@@ -69,7 +82,13 @@ class OrderServiceTest {
     }
 
     @Test
-    void createOrder() {
+    void shouldCreateOrder() {
+        //Given
+        when(guideService.getAvailableGuides(LocalDate.of(2023, 10, 2))).thenReturn((List<Guide>) guideOne);
+        //When
+        orderService.createOrder(customerOne, LocalDate.of(2023, 10, 2));
+        //Then
+        verify(orderRepository, times(1)).save(any(Order.class));
     }
 
     @Test
