@@ -25,23 +25,17 @@ public class Guide {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Order> tours;
-    private long daysOffSinceLastTrip;
+    private long daysOffSinceLastTrip = setDaysOffSinceLastTrip(tours);
 
-    public void setDaysOffSinceLastTrip(List<Order> tours) {
-        if (tours == null || tours.isEmpty()) {
-            daysOffSinceLastTrip = 0;
-        } else {
-
-            LocalDate lastTripDate = tours.get(0).getTourDate();
-            for (Order order : tours) {
-                LocalDate tourDate = order.getTourDate();
-                if (tourDate != null && tourDate.isAfter(lastTripDate)) {
-                    lastTripDate = tourDate;
-                }
+    public long setDaysOffSinceLastTrip(List<Order> tours) {
+        LocalDate lastTripDate = tours.get(0).getTourDate();
+        for (Order order : tours) {
+            LocalDate tourDate = order.getTourDate();
+            if (tourDate.isBefore(LocalDate.now()) && tourDate.isAfter(lastTripDate)) {
+                lastTripDate = tourDate;
             }
-
-            daysOffSinceLastTrip = ChronoUnit.DAYS.between(lastTripDate, LocalDate.now());
         }
+        return ChronoUnit.DAYS.between(lastTripDate, LocalDate.now());
     }
 
 }
