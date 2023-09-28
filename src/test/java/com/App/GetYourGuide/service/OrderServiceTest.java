@@ -51,7 +51,7 @@ class OrderServiceTest {
         guideOneTours.add(orderOne);
         guideOneTours.add(orderTwo);
 
-        guideOne = new Guide(1L, "Name Lastname", guideOneTours, 1);
+        guideOne = new Guide(1L, "Name Lastname", guideOneTours);
     }
 
     @Test

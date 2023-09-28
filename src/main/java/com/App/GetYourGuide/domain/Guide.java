@@ -25,10 +25,9 @@ public class Guide {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Order> tours;
-    private long daysOffSinceLastTrip = setDaysOffSinceLastTrip(tours);
 
-    public long setDaysOffSinceLastTrip(List<Order> tours) {
-        LocalDate lastTripDate = tours.get(0).getTourDate();
+    public long getDaysOffSinceLastTrip() {
+        LocalDate lastTripDate = LocalDate.MIN;
         for (Order order : tours) {
             LocalDate tourDate = order.getTourDate();
             if (tourDate.isBefore(LocalDate.now()) && tourDate.isAfter(lastTripDate)) {
