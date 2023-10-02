@@ -15,8 +15,8 @@ public class OrderDto {
     private TourOrder tour;
     private GuideDto guideDto;
     private LocalDate tourDate;
-    private boolean isPaid;
-    private boolean isVerified;
-    private boolean isSubmitted;
+    private boolean paid;
+    private boolean verified;
+    private boolean submitted;
     private CustomerDto customerDto;
 }

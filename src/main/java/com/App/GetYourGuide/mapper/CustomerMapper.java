@@ -13,7 +13,7 @@ public interface CustomerMapper {
 
     @Mapping(source = "customerId", target = "customerId")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "email", target = "name")
+    @Mapping(source = "email", target = "email")
     @Mapping(source = "orderedTours", target = "orderedTours")
     Customer mapToCustomer(CustomerDto customerDto);
 

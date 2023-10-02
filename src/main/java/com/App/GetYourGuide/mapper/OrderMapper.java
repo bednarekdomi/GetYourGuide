@@ -16,9 +16,9 @@ public interface OrderMapper {
     @Mapping(source = "orderId", target = "orderId")
     @Mapping(source="tour", target = "tour")
     @Mapping(source = "guideDto", target = "guide")
-    @Mapping(source = "isPaid", target = "isPaid")
-    @Mapping(source = "isVerified", target = "isVerified")
-    @Mapping(source = "isSubmitted", target = "isSubmitted")
+    @Mapping(source = "paid", target = "paid")
+    @Mapping(source = "verified", target = "verified")
+    @Mapping(source = "submitted", target = "submitted")
     @Mapping(source="customerDto", target = "customer")
     Order mapToOrderDetails(OrderDto orderDto);
 

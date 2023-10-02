@@ -25,21 +25,21 @@ public class Order {
     @JoinColumn(name = "guide_id", nullable = false)
     private Guide guide;
     private LocalDate tourDate;
-    private boolean isPaid;
-    private boolean isVerified;
-    private boolean isSubmitted;
+    private boolean paid;
+    private boolean verified;
+    private boolean submitted;
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    public Order(TourOrder tour, Guide guide, LocalDate tourDate, boolean isPaid, boolean isVerified, boolean isSubmitted,
+    public Order(TourOrder tour, Guide guide, LocalDate tourDate, boolean paid, boolean verified, boolean submitted,
                  Customer customer) {
         this.tour = tour;
         this.guide = guide;
         this.tourDate = tourDate;
-        this.isPaid = isPaid;
-        this.isVerified = isVerified;
-        this.isSubmitted = isSubmitted;
+        this.paid = paid;
+        this.verified = verified;
+        this.submitted = submitted;
         this.customer = customer;
     }
 }
