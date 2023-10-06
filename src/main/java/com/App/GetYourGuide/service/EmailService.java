@@ -2,23 +2,19 @@ package com.App.GetYourGuide.service;
 
 import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.Order;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
 
     private final JavaMailSender javaMailSender;
-
-    @Autowired
-    public EmailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMailMessage.class);
     private static final String CANCELLED_ORDER = "You cancelled the order";
@@ -38,6 +34,7 @@ public class EmailService {
 
     private SimpleMailMessage createMail(final MailDetails mailDetails){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("noreplyGetYourGuide@gmail.com");
         mailMessage.setTo(mailDetails.getMailTo());
         mailMessage.setSubject(mailDetails.getSubject());
         mailMessage.setText(mailDetails.getMessage());
