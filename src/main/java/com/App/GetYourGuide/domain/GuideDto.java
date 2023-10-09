@@ -16,5 +16,5 @@ public class GuideDto {
     private long Id;
     private String name;
     private List<OrderDto> tours;
-    private long daysOffSinceLastTrip;
+
 }
