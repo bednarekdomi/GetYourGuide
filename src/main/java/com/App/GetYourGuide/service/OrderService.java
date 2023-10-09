@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -58,5 +59,9 @@ public class OrderService {
 
     public double refundPayment(Long orderId) {
         return orderRepository.getReferenceById(orderId).getTour().getCost();
+    }
+
+    public BigDecimal getOrderPrice(long orderId) {
+        return new BigDecimal(orderRepository.getReferenceById(orderId).getTour().getCost() / 100);
     }
 }
