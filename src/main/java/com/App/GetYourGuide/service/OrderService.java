@@ -62,6 +62,6 @@ public class OrderService {
     }
 
     public BigDecimal getOrderPrice(long orderId) {
-        return new BigDecimal(orderRepository.getReferenceById(orderId).getTour().getCost() / 100);
+        return BigDecimal.valueOf(orderRepository.getReferenceById(orderId).getTour().getCost() / 100);
     }
 }

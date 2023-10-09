@@ -28,15 +28,4 @@ public class Guide {
             fetch = FetchType.LAZY)
     private List<Order> tours;
 
-    public long getDaysOffSinceLastTrip() {
-        LocalDate lastTripDate = LocalDate.MIN;
-        for (Order order : tours) {
-            LocalDate tourDate = order.getTourDate();
-            if (tourDate.isBefore(LocalDate.now()) && tourDate.isAfter(lastTripDate)) {
-                lastTripDate = tourDate;
-            }
-        }
-        return ChronoUnit.DAYS.between(lastTripDate, LocalDate.now());
-    }
-
 }

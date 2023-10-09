@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,13 +32,25 @@ public class GuideService {
         List<Guide> allGuides = guideRepository.findAll();
         for (Guide guide : allGuides) {
             for (Order order : guide.getTours()) {
-                if (!order.getTourDate().equals(date) || guide.getDaysOffSinceLastTrip() >= 2) {
+                if (!order.getTourDate().equals(date) || getDaysOffSinceLastTrip(guide.getId()) >= 2) {
                     availableGuides.add(guide);
-                    availableGuides.sort(Comparator.comparingLong(Guide::getDaysOffSinceLastTrip).reversed());
                 }
             }
         }
 
-        return availableGuides;
+        return availableGuides.stream().sorted().toList();
+    }
+
+    public long getDaysOffSinceLastTrip(long guideId) {
+        Guide guide = guideRepository.getReferenceById(guideId);
+        List<Order> tours = guide.getTours();
+        LocalDate lastTripDate = LocalDate.MIN;
+        for (Order order : tours) {
+            LocalDate tourDate = order.getTourDate();
+            if (tourDate.isBefore(LocalDate.now()) && tourDate.isAfter(lastTripDate)) {
+                lastTripDate = tourDate;
+            }
+        }
+        return ChronoUnit.DAYS.between(lastTripDate, LocalDate.now());
     }
 }
