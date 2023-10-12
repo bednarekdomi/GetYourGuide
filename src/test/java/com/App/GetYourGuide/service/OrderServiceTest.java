@@ -59,6 +59,7 @@ class OrderServiceTest {
         //Given
         when(orderMapper.mapToOrderDetailsDto(orderOne)).thenReturn(orderOneDto);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(orderOne));
+        when(orderRepository.findById(3L)).thenReturn(Optional.empty());
         //When
         Optional<OrderDto> order = orderService.getOrder(1L);
         //Then
@@ -75,7 +76,9 @@ class OrderServiceTest {
 
     @Test
     void shouldCancelOrder() {
-        //Given & When
+        //Given
+        when(orderRepository.getReferenceById(1L)).thenReturn(orderOne);
+        //When
         orderService.cancelOrder(orderOne.getOrderId());
         //Then
         verify(orderRepository, times(1)).deleteById(orderOne.getOrderId());
