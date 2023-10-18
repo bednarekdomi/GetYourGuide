@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-class OrderServiceTest {
+public class OrderServiceTest {
 
     @InjectMocks
     private OrderService orderService;
@@ -55,11 +55,10 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldGetOrderById() {
+    public void shouldGetOrderById() {
         //Given
-        when(orderMapper.mapToOrderDetailsDto(orderOne)).thenReturn(orderOneDto);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(orderOne));
-        when(orderRepository.findById(3L)).thenReturn(Optional.empty());
+        when(orderMapper.mapToOrderDetailsDto(orderOne)).thenReturn(orderOneDto);
         //When
         Optional<OrderDto> order = orderService.getOrder(1L);
         //Then
@@ -75,7 +74,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldCancelOrder() {
+    public void shouldCancelOrder() {
         //Given
         when(orderRepository.getReferenceById(1L)).thenReturn(orderOne);
         //When
@@ -85,7 +84,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldCreateOrder() {
+    public void shouldCreateOrder() {
         //Given
         when(guideService.getAvailableGuides(LocalDate.of(2023, 10, 2))).thenReturn((List<Guide>) guideOne);
         //When
@@ -95,7 +94,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldUpdateOrder() {
+    public void shouldUpdateOrder() {
         //Given
         when(orderRepository.findById(1L)).thenReturn(Optional.ofNullable(orderOne));
         //When
@@ -105,7 +104,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldReturnRefundPayment() {
+    public void shouldReturnRefundPayment() {
         //Given
         when(orderRepository.getReferenceById(1L)).thenReturn(orderOne);
         //When
