@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Data
 @RequiredArgsConstructor
 public class OrderService {
 
@@ -40,10 +39,12 @@ public class OrderService {
     public void createOrder(Customer customer, LocalDate date) {
         List<Guide> availableGuide = guideService.getAvailableGuides(date);
         if (availableGuide.isEmpty()) System.out.println("No guides available for this day");
-        BasicOrderDecorator basicOrderDecorator = new BasicOrderDecorator();
-        Order newOrder = new Order(basicOrderDecorator, availableGuide.get(0), date, false, false, false, customer);
-        orderRepository.save(newOrder);
-        emailService.sendEmailAfterCreatingOrder(newOrder);
+        if (availableGuide.size() > 0) {
+            BasicOrderDecorator basicOrderDecorator = new BasicOrderDecorator();
+            Order newOrder = new Order(basicOrderDecorator, availableGuide.get(0), date, false, false, false, customer);
+            orderRepository.save(newOrder);
+            emailService.sendEmailAfterCreatingOrder(newOrder);
+        }
     }
 
     public OrderDto updateOrderDetails(Long orderId, LocalDate newDate) {
@@ -65,7 +66,7 @@ public class OrderService {
         return BigDecimal.valueOf(orderRepository.getReferenceById(orderId).getTour().getCost() / 100);
     }
 
-    public void doOrderPayment(Long orderId){
+    public void doOrderPayment(Long orderId) {
         orderRepository.findById(orderId).get().setPaid(true);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,8 @@ public class OrderServiceTest {
     private OrderRepository orderRepository;
     @Mock
     private GuideService guideService;
+    @Mock
+    private EmailService emailService;
 
     private OrderDto orderOneDto;
     private Order orderOne;
@@ -57,7 +60,7 @@ public class OrderServiceTest {
     @Test
     public void shouldGetOrderById() {
         //Given
-        when(orderRepository.findById(1L)).thenReturn(Optional.of(orderOne));
+        when(orderRepository.findById(1L)).thenReturn(Optional.ofNullable(orderOne));
         when(orderMapper.mapToOrderDetailsDto(orderOne)).thenReturn(orderOneDto);
         //When
         Optional<OrderDto> order = orderService.getOrder(1L);
@@ -86,11 +89,23 @@ public class OrderServiceTest {
     @Test
     public void shouldCreateOrder() {
         //Given
-        when(guideService.getAvailableGuides(LocalDate.of(2023, 10, 2))).thenReturn((List<Guide>) guideOne);
+        when(guideService.getAvailableGuides(LocalDate.of(2023, 10, 2))).thenReturn(Collections.singletonList(guideOne));
         //When
         orderService.createOrder(customerOne, LocalDate.of(2023, 10, 2));
         //Then
         verify(orderRepository, times(1)).save(any(Order.class));
+        verify(emailService, times(1)).sendEmailAfterCreatingOrder(any(Order.class));
+    }
+
+    @Test
+    public void shouldNotCreateOrder(){
+        //Given
+        when(guideService.getAvailableGuides(LocalDate.of(2023, 10, 3))).thenReturn(Collections.emptyList());
+        //When
+        orderService.createOrder(customerOne, LocalDate.of(2023, 10, 3));
+        //Then
+        verify(orderRepository, never()).save(any(Order.class));
+        verify(emailService, never()).sendEmailAfterCreatingOrder(any(Order.class));
     }
 
     @Test

@@ -16,7 +16,6 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-@Data
 @RequiredArgsConstructor
 public class GuideService {
 
