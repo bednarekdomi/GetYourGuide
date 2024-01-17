@@ -10,6 +10,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class EmailService {
@@ -61,6 +63,11 @@ public class EmailService {
                 CANCELLED_ORDER, "Hello " +  cancelledOrder.getCustomer().getName() +
                 "Your order number" + cancelledOrder.getOrderId() + "is cancelled. There were less than two days left " +
                 "until the ordered mountain tour - only half the amount will be refunded"));
+    }
+
+    public void sendEmailWithWeeklySchedule(String guideEmail){
+        sendEmail(new MailDetails(guideEmail, "Weekly Schedule" + LocalDate.now().toString() + " - " + LocalDate.now().plusDays(7).toString(),
+                "The tour plan for this week is available in the attached file"));
     }
 
 }
