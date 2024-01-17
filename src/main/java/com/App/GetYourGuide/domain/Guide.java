@@ -22,6 +22,7 @@ public class Guide {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
     private String name;
+    private String email;
 
     @OneToMany(mappedBy = "guide",
             cascade = CascadeType.ALL,

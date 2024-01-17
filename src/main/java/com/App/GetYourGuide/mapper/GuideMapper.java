@@ -15,6 +15,7 @@ public interface GuideMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
+    @Mapping(source = "email", target = "email")
     @Mapping(ignore = true, target = "tours")
     Guide mapToGuide(GuideDto guideDto);
 

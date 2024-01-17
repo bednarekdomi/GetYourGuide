@@ -15,6 +15,7 @@ public class GuideDto {
 
     private long Id;
     private String name;
+    private String email;
     private List<OrderDto> tours;
 
 }
