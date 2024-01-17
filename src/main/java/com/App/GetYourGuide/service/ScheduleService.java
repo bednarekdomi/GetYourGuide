@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,25 +28,30 @@ public class ScheduleService {
             for (Order order : ordersThisWeek) {
                 clearScheduleFile(scheduleFilePath);
                 if (order.getGuide().equals(guide)) {
-
+                    addTourToFile(scheduleFilePath, order.getTourDate().toString() + " " +
+                            order.getCustomer().getName().toString());
                 }
             }
         }
-
     }
 
     public void clearScheduleFile(String filePath) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, false));
             bw.write("");
-            bw.close();
             System.out.println("The file has been cleared");
         } catch (IOException e) {
             System.out.println("An error occurred" + e.getMessage());
         }
     }
 
-
-
-
+    public void addTourToFile(String filePath, String line) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
+            bw.write(line);
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("An error occurred" + e.getMessage());
+        }
+    }
 }
