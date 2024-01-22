@@ -2,14 +2,18 @@ package com.App.GetYourGuide.service;
 
 import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.Order;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDate;
 
 @Service
@@ -34,7 +38,7 @@ public class EmailService {
         }
     }
 
-    private SimpleMailMessage createMail(final MailDetails mailDetails){
+    private SimpleMailMessage createMail(final MailDetails mailDetails) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("noreplyGetYourGuide@gmail.com");
         mailMessage.setTo(mailDetails.getMailTo());
@@ -43,7 +47,7 @@ public class EmailService {
         return mailMessage;
     }
 
-    public void sendEmailAfterCreatingOrder(Order newOrder){
+    public void sendEmailAfterCreatingOrder(Order newOrder) {
         sendEmail(new MailDetails(
                 newOrder.getCustomer().getEmail(),
                 "A new order has been created",
@@ -52,22 +56,39 @@ public class EmailService {
         ));
     }
 
-    public void earlyCancellationEmail(Order cancelledOrder){
+    public void earlyCancellationEmail(Order cancelledOrder) {
         sendEmail(new MailDetails(cancelledOrder.getCustomer().getEmail(),
-                CANCELLED_ORDER, "Hello " +  cancelledOrder.getCustomer().getName() +
+                CANCELLED_ORDER, "Hello " + cancelledOrder.getCustomer().getName() +
                 "Your order number" + cancelledOrder.getOrderId() + "is cancelled. The entire deposit will be refunded"));
     }
 
-    public void laterCancellationEmail(Order cancelledOrder){
+    public void laterCancellationEmail(Order cancelledOrder) {
         sendEmail(new MailDetails(cancelledOrder.getCustomer().getEmail(),
-                CANCELLED_ORDER, "Hello " +  cancelledOrder.getCustomer().getName() +
+                CANCELLED_ORDER, "Hello " + cancelledOrder.getCustomer().getName() +
                 "Your order number" + cancelledOrder.getOrderId() + "is cancelled. There were less than two days left " +
                 "until the ordered mountain tour - only half the amount will be refunded"));
     }
 
-    public void sendEmailWithWeeklySchedule(String guideEmail){
-        sendEmail(new MailDetails(guideEmail, "Weekly Schedule" + LocalDate.now().toString() + " - " + LocalDate.now().plusDays(7).toString(),
-                "The tour plan for this week is available in the attached file"));
+    public void sendEmailWithWeeklySchedule(String guideEmail, String filePath) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(guideEmail);
+            helper.setSubject("Weekly Schedule" + LocalDate.now().toString() + " - " + LocalDate.now().plusDays(7).toString());
+            helper.setText("The tour plan for this week is available in the attached file");
+
+
+            if (filePath != null) {
+                File file = new File(filePath);
+                helper.addAttachment(file.getName(), file);
+            }
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+
+        }
     }
 
 }
