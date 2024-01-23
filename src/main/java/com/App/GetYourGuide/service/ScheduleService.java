@@ -17,6 +17,7 @@ public class ScheduleService {
 
     private final OrderRepository orderRepository;
     private final GuideRepository guideRepository;
+    private final EmailService emailService;
 
     public void createScheduleForGuide(LocalDate date, String scheduleFilePath) {
         List<Order> allOrders = orderRepository.findAll();
@@ -31,6 +32,7 @@ public class ScheduleService {
                     addTourToFile(scheduleFilePath, order.getTourDate().toString() + " " +
                             order.getCustomer().getName().toString());
                 }
+                emailService.sendEmailWithWeeklySchedule(guide.getEmail(), "path/to/weeklySchedule.txt");
             }
         }
     }
