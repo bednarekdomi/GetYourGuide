@@ -4,8 +4,8 @@ import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.Order;
 import com.App.GetYourGuide.repository.OrderRepository;
 import com.App.GetYourGuide.service.EmailService;
+import com.App.GetYourGuide.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +19,7 @@ public class EmailScheduler {
 
     private final EmailService emailService;
     private final OrderRepository orderRepository;
+    private final ScheduleService scheduleService;
 
     private static final String SUBJECT = "Reminder about upcoming mountain tour";
 
@@ -39,6 +40,10 @@ public class EmailScheduler {
                 ));
             }
         }
+    }
+    @Scheduled(cron = "0 0 18 * * SUN")
+    public void sendWeeklySchedule(){
+        scheduleService.createScheduleForGuide(LocalDate.now(), "pathTo/weeklySchedule.txt");
     }
 
 }
