@@ -91,4 +91,9 @@ public class EmailService {
         }
     }
 
+    public void sendEmailToGuideAboutNewOrder(Order newOrder){
+        sendEmail(new MailDetails(newOrder.getGuide().getEmail(), "You have been signed up for a new assignment",
+                "There's a new tour in your Schedule on " + newOrder.getTourDate().toString()));
+    }
+
 }
