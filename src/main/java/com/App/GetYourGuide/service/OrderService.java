@@ -3,7 +3,6 @@ package com.App.GetYourGuide.service;
 import com.App.GetYourGuide.mapper.OrderMapper;
 import com.App.GetYourGuide.repository.OrderRepository;
 import com.App.GetYourGuide.domain.*;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +43,7 @@ public class OrderService {
             Order newOrder = new Order(basicOrderDecorator, availableGuide.get(0), date, false, false, false, customer);
             orderRepository.save(newOrder);
             emailService.sendEmailAfterCreatingOrder(newOrder);
+            emailService.sendEmailToGuideAboutNewOrder(newOrder);
         }
     }
 
