@@ -26,18 +26,13 @@ public class EmailScheduler {
     @Scheduled(cron = "0 0 10 * * *")
     public void sendReminderEmail() {
         List<Order> allOrders = orderRepository.findAll();
-        LocalDate currentDate = LocalDate.now();
 
         for (Order order : allOrders) {
             LocalDate tourDate = order.getTourDate();
-            long daysUntilTour = ChronoUnit.DAYS.between(currentDate, tourDate);
+            long daysUntilTour = ChronoUnit.DAYS.between(LocalDate.now(), tourDate);
 
             if (daysUntilTour > 0) {
-                emailService.sendEmail(new MailDetails(order.getCustomer().getEmail(),
-                        SUBJECT,
-                        "We would like to remind you about the upcoming mountain trip with a guide " + order.getGuide().getName()
-                                + "in " + daysUntilTour + " days"
-                ));
+                emailService.sendReminderEmailToClient(order, daysUntilTour);
             }
         }
     }
