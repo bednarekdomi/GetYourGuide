@@ -96,4 +96,10 @@ public class EmailService {
                 "There's a new tour in your Schedule on " + newOrder.getTourDate().toString()));
     }
 
+    public void sendReminderEmailToClient(Order order, long daysUntilTour){
+        sendEmail(new MailDetails(order.getCustomer().getEmail(),
+                "Reminder about upcoming mountain tour",
+                "We would like to remind you about the upcoming mountain trip with a guide " + order.getGuide().getName()
+                        + "in " + daysUntilTour + " days"));
+    }
 }
