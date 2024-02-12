@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -26,14 +27,12 @@ public class EmailScheduler {
     @Scheduled(cron = "0 0 10 * * *")
     public void sendReminderEmail() {
         List<Order> allOrders = orderRepository.findAll();
+        List<Order> upcomingOrders = allOrders.stream().filter(o -> o.getTourDate().isAfter(LocalDate.now())).toList();
 
-        for (Order order : allOrders) {
+        for (Order order : upcomingOrders) {
             LocalDate tourDate = order.getTourDate();
             long daysUntilTour = ChronoUnit.DAYS.between(LocalDate.now(), tourDate);
-
-            if (daysUntilTour > 0) {
-                emailService.sendReminderEmailToClient(order, daysUntilTour);
-            }
+            emailService.sendReminderEmailToClient(order, daysUntilTour);
         }
     }
     @Scheduled(cron = "0 0 18 * * SUN")
