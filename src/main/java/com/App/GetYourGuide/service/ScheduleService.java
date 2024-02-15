@@ -15,15 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleService {
 
-    private final OrderRepository orderRepository;
     private final GuideRepository guideRepository;
     private final EmailService emailService;
+    private final OrderService orderService;
 
     public void createScheduleForGuide(LocalDate date, String scheduleFilePath) {
-        List<Order> allOrders = orderRepository.findAll();
-        List<Order> ordersThisWeek = allOrders.stream().filter(o -> o.getTourDate().isAfter(date) && o.getTourDate()
-                .isBefore(date.plusDays(7))).toList();
-
+        List<Order> ordersThisWeek = orderService.filterOrdersForUpcomingWeek(date);
         List<Guide> allGuides = guideRepository.findAll();
         for (Guide guide : allGuides) {
             for (Order order : ordersThisWeek) {
