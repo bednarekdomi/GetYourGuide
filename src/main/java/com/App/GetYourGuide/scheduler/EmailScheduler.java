@@ -1,6 +1,5 @@
 package com.App.GetYourGuide.scheduler;
 
-import com.App.GetYourGuide.domain.MailDetails;
 import com.App.GetYourGuide.domain.Order;
 import com.App.GetYourGuide.repository.OrderRepository;
 import com.App.GetYourGuide.service.EmailService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -22,7 +20,6 @@ public class EmailScheduler {
     private final OrderRepository orderRepository;
     private final ScheduleService scheduleService;
 
-    private static final String SUBJECT = "Reminder about upcoming mountain tour";
 
     @Scheduled(cron = "0 0 10 * * *")
     public void sendReminderEmail() {
