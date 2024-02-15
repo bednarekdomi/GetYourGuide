@@ -54,13 +54,13 @@ public class OrderServiceTest {
         guideOneTours.add(orderOne);
         guideOneTours.add(orderTwo);
 
-        guideOne = new Guide(1L, "Name Lastname", guideOneTours);
+        guideOne = new Guide(1L, "Name Lastname", "guideOne@email.com", guideOneTours);
     }
 
     @Test
     public void shouldGetOrderById() {
         //Given
-        when(orderRepository.findById(1L)).thenReturn(Optional.ofNullable(orderOne));
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(orderOne));
         when(orderMapper.mapToOrderDetailsDto(orderOne)).thenReturn(orderOneDto);
         //When
         Optional<OrderDto> order = orderService.getOrder(1L);

@@ -69,4 +69,10 @@ public class OrderService {
     public void doOrderPayment(Long orderId) {
         orderRepository.findById(orderId).get().setPaid(true);
     }
+
+    public List<Order> filterOrdersForUpcomingWeek(LocalDate date){
+        List<Order> allOrders = orderRepository.findAll();
+        return allOrders.stream().filter(o -> o.getTourDate().isAfter(date) && o.getTourDate()
+                .isBefore(date.plusDays(7))).toList();
+    }
 }
