@@ -21,15 +21,19 @@ public class ScheduleService {
 
     public void createScheduleForGuide(LocalDate date, String scheduleFilePath) {
         List<Order> ordersThisWeek = orderService.filterOrdersForUpcomingWeek(date);
-        List<Guide> allGuides = guideRepository.findAll();
-        for (Guide guide : allGuides) {
+        clearScheduleFile(scheduleFilePath);
+
+        for (Guide guide : guideRepository.findAll()) {
+            StringBuilder scheduleBuilder = new StringBuilder();
             for (Order order : ordersThisWeek) {
-                clearScheduleFile(scheduleFilePath);
                 if (order.getGuide().equals(guide)) {
-                    addTourToFile(scheduleFilePath, order.getTourDate().toString() + " " +
-                            order.getCustomer().getName().toString());
+                    scheduleBuilder.append(order.getTourDate()).append(" ").append(order.getCustomer()
+                            .getName()).append("\n");
                 }
-                emailService.sendEmailWithWeeklySchedule(guide.getEmail(), "path/to/weeklySchedule.txt");
+                if (scheduleBuilder.length() > 0) {
+                    addTourToFile(scheduleFilePath, scheduleBuilder.toString());
+                    emailService.sendEmailWithWeeklySchedule(guide.getEmail(), "path/to/weeklySchedule.txt");
+                }
             }
         }
     }
