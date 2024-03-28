@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -24,9 +25,10 @@ public class GuideService {
     }
 
     public List<Guide> getAvailableGuides(LocalDate date) {
+        Comparator<Guide> compareByDaysOff = Comparator.comparingLong(g -> getDaysOffSinceLastTrip(g.getId()));
 
         return guideRepository.findAll().stream().filter(g -> g.getTours().stream().noneMatch(o -> o.getTourDate().isEqual(date)) &&
-                getDaysOffSinceLastTrip(g.getId()) < 2).sorted().toList();
+                getDaysOffSinceLastTrip(g.getId()) < 2).sorted(compareByDaysOff.reversed()).toList();
     }
 
     public long getDaysOffSinceLastTrip(long guideId) {
