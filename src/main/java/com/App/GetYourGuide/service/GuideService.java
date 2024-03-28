@@ -5,14 +5,11 @@ import com.App.GetYourGuide.repository.GuideRepository;
 import com.App.GetYourGuide.domain.Guide;
 import com.App.GetYourGuide.domain.GuideDto;
 import com.App.GetYourGuide.domain.Order;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -27,17 +24,9 @@ public class GuideService {
     }
 
     public List<Guide> getAvailableGuides(LocalDate date) {
-        List<Guide> availableGuides = new ArrayList<>();
-        List<Guide> allGuides = guideRepository.findAll();
-        for (Guide guide : allGuides) {
-            for (Order order : guide.getTours()) {
-                if (!order.getTourDate().equals(date) || getDaysOffSinceLastTrip(guide.getId()) >= 2) {
-                    availableGuides.add(guide);
-                }
-            }
-        }
 
-        return availableGuides.stream().sorted().toList();
+        return guideRepository.findAll().stream().filter(g -> g.getTours().stream().noneMatch(o -> o.getTourDate().isEqual(date)) &&
+                getDaysOffSinceLastTrip(g.getId()) < 2).sorted().toList();
     }
 
     public long getDaysOffSinceLastTrip(long guideId) {
