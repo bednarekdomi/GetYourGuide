@@ -75,4 +75,12 @@ public class OrderService {
         return allOrders.stream().filter(o -> o.getTourDate().isAfter(date) && o.getTourDate()
                 .isBefore(date.plusDays(7))).toList();
     }
+
+    public void addInsuranceToOrder(long orderId){
+        Optional<Order> order = orderRepository.findById(orderId);
+        order.ifPresent(o -> o.setTour(new InsuranceDecorator(o.getTour())));
+        if(order.isEmpty()){
+            System.out.println("Order with ID" + orderId + " not found");
+        }
+    }
 }
